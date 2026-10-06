@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 資安：頁面不載入任何外部資源、不用 innerHTML；正式站的 CSP 由 server.js 回應標頭設定 -->
+<meta name="referrer" content="no-referrer">
+<title>2027 消防公益月曆｜四湖參天宮（模擬預覽）</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">四湖參天宮 × 2027 消防公益月曆</div>
+    <div class="tag">A4 直式・模擬預覽</div>
+  </header>
+
+  <main class="stage">
+    <!-- 左右翻頁按鈕 -->
+    <button class="nav prev" id="prev" aria-label="上一頁">‹</button>
+    <!-- 書本：所有頁面由 app.js 產生 -->
+    <div class="book" id="book" aria-live="polite"></div>
+    <button class="nav next" id="next" aria-label="下一頁">›</button>
+  </main>
+
+  <!-- 頁碼與縮圖列 -->
+  <footer class="dock">
+    <div class="pager" id="pager">封面</div>
+    <nav class="thumbs" id="thumbs" aria-label="頁面縮圖"></nav>
+    <p class="hint">← → 鍵、滑動或點頁面左右兩側翻頁｜照片放進 photos 資料夾即可替換</p>
+  </footer>
+
+  <script src="days.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

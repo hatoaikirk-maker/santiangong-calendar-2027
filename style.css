@@ -1,0 +1,100 @@
+/* ===== 基本色票：廟宇紅 × 金 × 炭黑 ===== */
+:root{
+  --red:#9e1b1b; --dark:#5e1010; --gold:#d9a21b; --ink:#1e1e1e; --sand:#f3eee8; --grey:#6b6b6b;
+  --hol:#c62828; --ev:#b8862b;
+  /* A4 比例 210:297，依視窗高度自動縮放 */
+  --pageH:min(calc(100vh - 190px), 1123px);
+  --pageW:calc(var(--pageH) * 210 / 297);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",sans-serif;
+  background:radial-gradient(ellipse at center,#3a2a22 0%,#160f0c 75%);
+  color:#fff; display:flex; flex-direction:column; overflow:hidden;
+}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 24px}
+.brand{font-weight:700;letter-spacing:.08em;color:var(--gold)}
+.tag{font-size:13px;color:#cbb}
+
+/* ===== 舞台與書本 ===== */
+.stage{flex:1;display:flex;padding:10px 0;align-items:center;justify-content:center;gap:18px;perspective:2400px;min-height:0}
+.book{position:relative;width:var(--pageW);height:var(--pageH);transform-style:preserve-3d}
+.nav{width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:30px;cursor:pointer;transition:.2s}
+.nav:hover:not(:disabled){background:var(--gold);color:var(--dark)}
+.nav:disabled{opacity:.25;cursor:default}
+
+/* 每一頁：以左緣為軸翻轉，像電子書 */
+.page{
+  position:absolute;inset:0;background:#fff;color:var(--ink);
+  transform-origin:left center; transition:transform .9s cubic-bezier(.645,.045,.355,1), box-shadow .9s;
+  backface-visibility:hidden; overflow:hidden; border-radius:2px 6px 6px 2px;
+  box-shadow:0 18px 40px rgba(0,0,0,.55), inset 8px 0 14px -10px rgba(0,0,0,.35);
+  cursor:pointer;
+}
+.page.flipped{transform:rotateY(-178deg);box-shadow:none;pointer-events:none}
+/* 掛曆線圈 */
+.page::before{
+  content:"";position:absolute;top:0;left:8%;right:8%;height:2.2%;z-index:5;
+  background:repeating-linear-gradient(90deg,transparent 0 2.2%,#888 2.2% 2.8%,transparent 2.8% 5%);
+}
+
+/* ===== 照片區（上半） ===== */
+.photo{position:relative;height:52%;background:linear-gradient(160deg,var(--dark),#2a0b0b 60%,#120606);overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ph{position:absolute;left:0;right:0;top:18%;bottom:38%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8%;gap:.6em}
+.ph .cam{font-size:max(11px,calc(var(--pageH)*.014));letter-spacing:.2em;color:var(--gold);border:1px solid var(--gold);padding:.3em .9em;border-radius:99px}
+.ph .scene{font-size:max(12px,calc(var(--pageH)*.018));color:#f1e6dd;line-height:1.7;max-width:90%}
+.mood{position:absolute;left:5%;right:5%;bottom:5%;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.7)}
+.mood .t{font-size:calc(var(--pageH)*.052);font-weight:900;letter-spacing:.12em}
+.mood .s{font-size:max(11px,calc(var(--pageH)*.016));opacity:.9;line-height:1.6;white-space:pre-line;max-width:80%}
+.mbig{position:absolute;right:5%;top:6%;font-size:calc(var(--pageH)*.07);font-weight:900;color:var(--gold);line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.mbig small{display:block;font-size:.28em;letter-spacing:.3em;color:#fff;text-align:right}
+
+/* ===== 月曆格（下半） ===== */
+.cal{height:48%;padding:2.4% 5% 3%;display:flex;flex-direction:column;min-height:0}
+.cal-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.2%}
+.cal-head .ym{font-size:max(14px,calc(var(--pageH)*.024));font-weight:700;color:var(--red)}
+.cal-head .brand2{font-size:max(10px,calc(var(--pageH)*.012));color:var(--grey)}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:auto;grid-auto-rows:minmax(0,1fr);border-top:2px solid var(--red)}
+.wd{font-size:max(11px,calc(var(--pageH)*.013));font-weight:700;text-align:center;padding:.3em 0;color:var(--grey);border-bottom:1px solid #e6dcd2}
+.wd.sun,.wd.sat{color:var(--hol)}
+.d{border-bottom:1px solid #f0e8e0;padding:.25em .3em;display:flex;flex-direction:column;justify-content:space-between;min-width:0;min-height:0;overflow:hidden}
+.d .top{display:flex;justify-content:space-between;align-items:baseline;gap:.2em}
+.d .n{font-size:max(12px,calc(var(--pageH)*.019));font-weight:700;line-height:1}
+.d .l{font-size:max(8px,calc(var(--pageH)*.0095));color:var(--grey);line-height:1;white-space:nowrap}
+.d .x{font-size:max(8px,calc(var(--pageH)*.0095));font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d.hol .n,.d.sun .n,.d.hol .x{color:var(--hol)}
+.d.ev .x{color:var(--ev)}
+.d.ev{background:linear-gradient(0deg,rgba(217,162,27,.13),transparent 70%)}
+.d.empty{background:transparent}
+
+/* ===== 封面／封底 ===== */
+.cover .photo{height:100%}
+.cover .ph{top:35%;bottom:30%}
+.cover .title{position:absolute;left:0;right:0;top:7%;text-align:center}
+.cover .title .y{font-size:calc(var(--pageH)*.11);font-weight:900;color:var(--gold);letter-spacing:.05em;line-height:1}
+.cover .title .n{color:#f6eee6;font-size:max(14px,calc(var(--pageH)*.03));letter-spacing:.4em;margin-top:.4em}
+.cover .foot{position:absolute;left:0;right:0;bottom:5%;text-align:center;font-size:calc(var(--pageH)*.015);color:#f1e6dd;letter-spacing:.15em;line-height:1.8}
+.back .info{position:absolute;left:8%;right:8%;bottom:7%;background:rgba(0,0,0,.45);border:1px solid rgba(217,162,27,.6);padding:5%;font-size:calc(var(--pageH)*.014);line-height:1.9;color:#f6eee6}
+.back .info b{color:var(--gold)}
+
+/* ===== 底部縮圖 ===== */
+.dock{position:relative;z-index:2;padding:8px 16px 14px;text-align:center}
+.pager{position:relative;z-index:2;font-size:14px;color:var(--gold);margin-bottom:6px}
+.thumbs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.thumbs button{min-width:42px;height:28px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#ddd;border-radius:4px;font-size:12px;cursor:pointer}
+.thumbs button.on{background:var(--gold);color:var(--dark);border-color:var(--gold);font-weight:700}
+.hint{font-size:12px;color:#998;margin-top:6px}
+
+@media (max-width:640px){
+  :root{--pageH:min(calc(100vh - 200px), calc(92vw * 297 / 210))}
+  .nav{display:none}
+}
+@media print{
+  body{background:#fff}.topbar,.dock,.nav{display:none}
+  .stage{display:block;perspective:none}
+  .book{width:210mm;height:auto}
+  .page{position:relative;transform:none!important;box-shadow:none;page-break-after:always;width:210mm;height:297mm;pointer-events:auto}
+  :root{--pageH:297mm}
+}
