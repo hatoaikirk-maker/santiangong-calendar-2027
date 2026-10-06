@@ -40,7 +40,6 @@ function photoBlock(p) {
   box.append(ph);
   const img = new Image();
   img.alt = (p.label || MONTH_ZH[p.m]) + '「' + p.title + '」';
-  img.decoding = 'async';
   img.onload = () => {
     ph.remove(); box.prepend(img);
     box.append(el('span', 'demo', '情境示意圖'));

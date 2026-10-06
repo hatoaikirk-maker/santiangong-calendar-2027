@@ -27,12 +27,12 @@ body{
 /* 每一頁：以左緣為軸翻轉，像電子書 */
 .page{
   position:absolute;inset:0;background:#fff;color:var(--ink);
-  transform-origin:left center; transition:transform .9s cubic-bezier(.645,.045,.355,1), box-shadow .9s;
-  backface-visibility:hidden; overflow:hidden; border-radius:2px 6px 6px 2px;
+  transform-origin:left center; transition:transform .9s cubic-bezier(.645,.045,.355,1), box-shadow .9s, opacity 0s linear .45s;
+  opacity:1; overflow:hidden; border-radius:2px 6px 6px 2px;
   box-shadow:0 18px 40px rgba(0,0,0,.55), inset 8px 0 14px -10px rgba(0,0,0,.35);
   cursor:pointer;
 }
-.page.flipped{transform:rotateY(-178deg);box-shadow:none;pointer-events:none}
+.page.flipped{transform:rotateY(-178deg);box-shadow:none;pointer-events:none;opacity:0}
 /* 掛曆線圈 */
 .page::before{
   content:"";position:absolute;top:0;left:8%;right:8%;height:2.2%;z-index:5;
