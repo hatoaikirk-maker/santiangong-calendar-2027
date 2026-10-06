@@ -41,7 +41,11 @@ function photoBlock(p) {
   const img = new Image();
   img.alt = (p.label || MONTH_ZH[p.m]) + '「' + p.title + '」';
   img.decoding = 'async';
-  img.onload = () => { ph.remove(); box.prepend(img); };
+  img.onload = () => {
+    ph.remove(); box.prepend(img);
+    box.append(el('span', 'demo', '情境示意圖'));
+    const pg = box.closest('.page'); if (pg) pg.classList.add('has-img');
+  };
   img.onerror = () => { /* 沒照片就保留佔位，不報錯 */ };
   img.src = 'photos/' + p.key + '.jpg';
   return box;
